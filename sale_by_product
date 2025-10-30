@@ -1,0 +1,17 @@
+
+CREATE OR REPLACE FUNCTION get_total_sales_by_prod(prod_id IN NUMBER)
+RETURN NUMBER IS 
+    total_sales NUMBER;
+BEGIN
+    SELECT SUM(Quantity) INTO total_sales
+    FROM Sales
+    WHERE PRODID = prod_id;
+
+    RETURN total_sales;
+END;
+/
+
+SELECT get_total_sales_by_prod(102) AS total_quantity FROM dual
+
+
+
