@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION get_sales_by_emp(emp_id IN NUMBER)
+RETURN NUMBER IS
+    total_sales NUMBER;
+BEGIN
+    SELECT SUM(Quantity) INTO total_sales
+    FROM Sales
+    WHERE EMPID = emp_id;
+
+    RETURN total_sales;
+
+EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RETURN 0;
+END;
