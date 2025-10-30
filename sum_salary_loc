@@ -1,0 +1,25 @@
+CREATE OR REPLACE PROCEDURE sum_salary_by_location(
+    p_location IN VARCHAR2,
+    p_total_salary OUT NUMBER
+) AS
+BEGIN
+    p_total_salary := 0;
+
+    SELECT SUM(E.SALARY) INTO p_total_salary from EMPLOYEE E,DEPARTMENT D WHERE E.DEPTID = D.DEPTID AND D.DEPTLOC = p_location;
+
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN 
+            p_total_salary := 0;
+        WHEN OTHERS THEN
+            RAISE;
+END sum_salary_by_location;
+/
+
+DECLARE 
+    total_salary NUMBER;
+    --loc VARCHAR(20) := '&DeptLoc';
+BEGIN
+    sum_salary_by_location(loc,total_salary);
+    DBMS_OUTPUT.PUT_LINE('Total Salary for location is:' || total_salary);
+END;
+/
